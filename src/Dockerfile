@@ -22,7 +22,7 @@ ENV NUGET_CREDENTIALPROVIDER_SESSIONTOKENCACHE_ENABLED true
 ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS "{\"endpointCredentials\": [{\"endpoint\":\"${FEED_URL}\", \"username\":\"ArtifactsDocker\", \"password\":\"${PAT}\"}]}"
 
 # Use this if you have a nuget.config file with all the endpoints.
-RUN dotnet restore -s ${FEED_URL} -s "https://api.nuget.org/v3/index.json"
+RUN dotnet restore -s "${FEED_URL}" -s "https://api.nuget.org/v3/index.json"
 
 # copy everything else and build
 COPY . ./

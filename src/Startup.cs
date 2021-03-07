@@ -22,13 +22,19 @@ namespace Identity.Business
     {
         public void Configure(IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<IdentityServerOptions>(configuration.GetSection(nameof(IdentityServerOptions)));
-            services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityServerOptions>>().Value);
+            services.AddSingleton(new IdentityServerOptions
+            {
+                OrgUrl = configuration.GetValue<string>("IdentityServer_OrgUrl"),
+                PandorasClientId = configuration.GetValue<string>("IdentityServer_ClientId")
+            });
+
+            // services.Configure<IdentityServerOptions>(configuration.GetSection(nameof(IdentityServerOptions)));
+            // services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityServerOptions>>().Value);
 
             services.AddDataLayerAccess(db =>
             {
-                db.ConnectionString = configuration.GetValue<string>("DatabaseSettings:ConnectionString");
-                db.DatabaseName = configuration.GetValue<string>("DatabaseSettings:DatabaseName");
+                db.ConnectionString = configuration.GetValue<string>("DatabaseSettings_ConnectionString");
+                db.DatabaseName = configuration.GetValue<string>("DatabaseSettings_DatabaseName");
             });
 
             services.AddMappers();
@@ -38,7 +44,7 @@ namespace Identity.Business
 
             services.AddBroker(
                 configure => configure
-                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("BrokerOptions:Host")),
+                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("Broker_Host")),
                 consumers =>
                 {
                     // auth servers
