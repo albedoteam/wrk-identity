@@ -1,7 +1,5 @@
 ﻿using AlbedoTeam.Accounts.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Commands;
 using AlbedoTeam.Identity.Contracts.Events;
-using AlbedoTeam.Identity.Contracts.Requests;
 using AlbedoTeam.Sdk.DataLayerAccess;
 using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
 using AlbedoTeam.Sdk.MessageConsumer;
@@ -14,7 +12,6 @@ using Identity.Business.Mappers;
 using Identity.Business.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Identity.Business
 {
@@ -25,7 +22,9 @@ namespace Identity.Business
             services.AddSingleton(new IdentityServerOptions
             {
                 OrgUrl = configuration.GetValue<string>("IdentityServer_OrgUrl"),
-                PandorasClientId = configuration.GetValue<string>("IdentityServer_ClientId")
+                PandorasClientId = configuration.GetValue<string>("IdentityServer_ClientId"),
+                ApiUrl = configuration.GetValue<string>("IdentityServer_ApiUrl"),
+                ApiKey = configuration.GetValue<string>("IdentityServer_ApiKey")
             });
 
             // services.Configure<IdentityServerOptions>(configuration.GetSection(nameof(IdentityServerOptions)));

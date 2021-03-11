@@ -1,4 +1,5 @@
-﻿using AlbedoTeam.Identity.Contracts.Requests;
+﻿using System.Collections.Generic;
+using AlbedoTeam.Identity.Contracts.Requests;
 using AlbedoTeam.Identity.Contracts.Responses;
 using AutoMapper;
 using Identity.Business.Mappers.Abstractions;
@@ -14,10 +15,10 @@ namespace Identity.Business.Mappers
         {
             var config = new MapperConfiguration(cfg =>
             {
-                // request to model
+                // request <--> model
                 cfg.CreateMap<CreateGroup, Group>().ReverseMap();
 
-                // model to response
+                // model -> response
                 cfg.CreateMap<Group, GroupResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
@@ -25,6 +26,21 @@ namespace Identity.Business.Mappers
             });
 
             _mapper = config.CreateMapper();
+        }
+
+        public Group RequestToModel(CreateGroup request)
+        {
+            return _mapper.Map<CreateGroup, Group>(request);
+        }
+
+        public GroupResponse MapModelToResponse(Group response)
+        {
+            return _mapper.Map<Group, GroupResponse>(response);
+        }
+
+        public List<GroupResponse> MapModelToResponse(List<Group> response)
+        {
+            return _mapper.Map<List<Group>, List<GroupResponse>>(response);
         }
     }
 }

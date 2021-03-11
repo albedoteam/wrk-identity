@@ -1,4 +1,4 @@
-﻿variable "src_name" {
+variable "src_name" {
   description = "Source name"
   type        = string
   default     = "identity-business"
@@ -44,6 +44,18 @@ variable "identity_server_org_url" {
 
 variable "identity_server_client_id" {
   description = "Identity Server Client Id"
+  type        = string
+  default     = ""
+}
+
+variable "identity_server_api_url" {
+  description = "Identity Server Api Url"
+  type        = string
+  default     = ""
+}
+
+variable "identity_server_api_key" {
+  description = "Identity Server Api Key"
   type        = string
   default     = ""
 }

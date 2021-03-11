@@ -1,7 +1,7 @@
 ﻿using System;
 using AlbedoTeam.Identity.Contracts.Common;
-using Identity.Business.Services.IdentityServers.Providers;
-using Identity.Business.Services.IdentityServers.Providers.Abstractions;
+using Identity.Business.Services.IdentityServers.Abstractions;
+using Identity.Business.Services.IdentityServers.Providers.Okta;
 
 namespace Identity.Business.Services.IdentityServers
 {

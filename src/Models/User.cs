@@ -17,5 +17,7 @@ namespace Identity.Business.Models
         public Dictionary<string, string> CustomProfileFields { get; set; }
         public List<string> Groups { get; set; }
         public Provider Provider { get; set; }
+        public string ProviderId { get; set; }
+        public string UpdateReason { get; set; }
     }
 }

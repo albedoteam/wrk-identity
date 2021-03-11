@@ -1,5 +1,5 @@
 ﻿using AlbedoTeam.Identity.Contracts.Common;
-using Identity.Business.Services.IdentityServers.Providers.Abstractions;
+using Identity.Business.Services.IdentityServers.Abstractions;
 
 namespace Identity.Business.Services.IdentityServers
 {

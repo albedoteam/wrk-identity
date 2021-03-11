@@ -28,6 +28,8 @@ resource "kubernetes_secret" "identity" {
     DatabaseSettings_DatabaseName     = var.db_name
     IdentityServer_OrgUrl             = var.identity_server_org_url
     IdentityServer_ClientId           = var.identity_server_client_id
+    IdentityServer_ApiUrl             = var.identity_server_api_url
+    IdentityServer_ApiKey             = var.identity_server_api_key
   }
 }
 

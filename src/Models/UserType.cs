@@ -13,5 +13,6 @@ namespace Identity.Business.Models
         public string Description { get; set; }
         public List<string> PredefinedGroups { get; set; }
         public Provider Provider { get; set; }
+        public string ProviderId { get; set; }
     }
 }

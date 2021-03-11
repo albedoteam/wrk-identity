@@ -1,4 +1,5 @@
-﻿using AlbedoTeam.Identity.Contracts.Requests;
+﻿using System.Collections.Generic;
+using AlbedoTeam.Identity.Contracts.Requests;
 using AlbedoTeam.Identity.Contracts.Responses;
 using AutoMapper;
 using Identity.Business.Mappers.Abstractions;
@@ -25,6 +26,21 @@ namespace Identity.Business.Mappers
             });
 
             _mapper = config.CreateMapper();
+        }
+
+        public UserType RequestToModel(CreateUserType request)
+        {
+            return _mapper.Map<CreateUserType, UserType>(request);
+        }
+
+        public UserTypeResponse MapModelToResponse(UserType model)
+        {
+            return _mapper.Map<UserType, UserTypeResponse>(model);
+        }
+
+        public List<UserTypeResponse> MapModelToResponse(List<UserType> model)
+        {
+            return _mapper.Map<List<UserType>, List<UserTypeResponse>>(model);
         }
     }
 }
