@@ -9,7 +9,6 @@ namespace Identity.Business.Mappers
         {
             services.AddTransient<IAuthServerMapper, AuthServerMapper>();
             services.AddTransient<IGroupMapper, GroupMapper>();
-            services.AddTransient<IUserMapper, UserMapper>();
             services.AddTransient<IUserTypeMapper, UserTypeMapper>();
 
             return services;

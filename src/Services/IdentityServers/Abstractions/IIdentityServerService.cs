@@ -6,7 +6,6 @@ namespace Identity.Business.Services.IdentityServers.Abstractions
     {
         IAuthServerProvider AuthServerProvider(Provider provider);
         IGroupProvider GroupProvider(Provider provider);
-        IUserProvider UserProvider(Provider provider);
         IUserTypeProvider UserTypeProvider(Provider provider);
     }
 }

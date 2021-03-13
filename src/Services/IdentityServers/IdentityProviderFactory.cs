@@ -32,15 +32,6 @@ namespace Identity.Business.Services.IdentityServers
             };
         }
 
-        public IUserProvider GetUserProvider(Provider provider)
-        {
-            return provider switch
-            {
-                Provider.Okta => (IUserProvider) _serviceProvider.GetService(typeof(OktaUserProvider)),
-                _ => throw new NotImplementedException()
-            };
-        }
-
         public IUserTypeProvider GetUserTypeProvider(Provider provider)
         {
             return provider switch

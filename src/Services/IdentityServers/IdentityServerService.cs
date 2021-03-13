@@ -22,11 +22,6 @@ namespace Identity.Business.Services.IdentityServers
             return _factory.GetGroupProvider(provider);
         }
 
-        public IUserProvider UserProvider(Provider provider)
-        {
-            return _factory.GetUserProvider(provider);
-        }
-
         public IUserTypeProvider UserTypeProvider(Provider provider)
         {
             return _factory.GetUserTypeProvider(provider);

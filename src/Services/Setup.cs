@@ -26,10 +26,6 @@ namespace Identity.Business.Services
                 .AddScoped<IGroupProvider, OktaGroupProvider>(s => s.GetService<OktaGroupProvider>());
 
             services
-                .AddScoped<OktaUserProvider>()
-                .AddScoped<IUserProvider, OktaUserProvider>(s => s.GetService<OktaUserProvider>());
-
-            services
                 .AddScoped<OktaUserTypeProvider>()
                 .AddScoped<IUserTypeProvider, OktaUserTypeProvider>(s => s.GetService<OktaUserTypeProvider>());
 
