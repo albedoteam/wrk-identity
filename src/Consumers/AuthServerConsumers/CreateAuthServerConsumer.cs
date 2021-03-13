@@ -6,7 +6,7 @@ using AlbedoTeam.Identity.Contracts.Responses;
 using Identity.Business.Db.Abstractions;
 using Identity.Business.Mappers.Abstractions;
 using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers;
+using Identity.Business.Services.IdentityServers.Abstractions;
 using MassTransit;
 
 namespace Identity.Business.Consumers.AuthServerConsumers
@@ -34,7 +34,6 @@ namespace Identity.Business.Consumers.AuthServerConsumers
         {
             var account = await _accountService.GetAccount(context.Message.AccountId);
             var isAccountValid = account is { } && account.Enabled;
-
             if (!isAccountValid)
             {
                 await context.RespondAsync<ErrorResponse>(new
@@ -42,7 +41,6 @@ namespace Identity.Business.Consumers.AuthServerConsumers
                     ErrorType = ErrorType.InvalidOperation,
                     ErrorMessage = $"Account invalid for id {context.Message.AccountId}"
                 });
-
                 return;
             }
 
@@ -61,7 +59,7 @@ namespace Identity.Business.Consumers.AuthServerConsumers
 
             var model = await _identityServer
                 .AuthServerProvider(context.Message.Provider)
-                .Create(context.Message.Provider, account.Id, account.Name, account.DisplayName);
+                .Create(account.Id, account.Name, account.DisplayName);
 
             if (model is null)
             {

@@ -21,12 +21,25 @@ namespace Identity.Business.Consumers.AuthServerConsumers
 
         public async Task Consume(ConsumeContext<GetAuthServer> context)
         {
-            if (!context.Message.Id.IsValidObjectId())
+            if (!context.Message.AccountId.IsValidObjectId())
+            {
                 await context.RespondAsync<ErrorResponse>(new
                 {
                     ErrorType = ErrorType.InvalidOperation,
-                    ErrorMessage = "The auth server ID does not have a valid ObjectId format"
+                    ErrorMessage = "The Account ID does not have a valid ObjectId format"
                 });
+                return;
+            }
+
+            if (!context.Message.Id.IsValidObjectId())
+            {
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = "The Auth Server ID does not have a valid ObjectId format"
+                });
+                return;
+            }
 
             var authServer = await _repository.FindById(
                 context.Message.AccountId,

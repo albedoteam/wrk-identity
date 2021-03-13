@@ -1,67 +1,63 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AlbedoTeam.Identity.Contracts.Commands;
-using AlbedoTeam.Identity.Contracts.Common;
 using AlbedoTeam.Identity.Contracts.Events;
-using AlbedoTeam.Identity.Contracts.Responses;
 using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
 using Identity.Business.Models;
-using Identity.Business.Services.IdentityServers;
+using Identity.Business.Services.Accounts;
+using Identity.Business.Services.IdentityServers.Abstractions;
 using MassTransit;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace Identity.Business.Consumers.AuthServerConsumers
 {
     public class ActivateAuthServerConsumer : IConsumer<ActivateAuthServer>
     {
+        private readonly IAccountService _accountService;
         private readonly IIdentityServerService _identityServer;
-        private readonly IAuthServerMapper _mapper;
+        private readonly ILogger<ActivateAuthServerConsumer> _logger;
         private readonly IAuthServerRepository _repository;
 
         public ActivateAuthServerConsumer(
-            IAuthServerMapper mapper,
             IAuthServerRepository repository,
-            IIdentityServerService identityServer)
+            IIdentityServerService identityServer,
+            ILogger<ActivateAuthServerConsumer> logger,
+            IAccountService accountService)
         {
-            _mapper = mapper;
             _repository = repository;
             _identityServer = identityServer;
+            _logger = logger;
+            _accountService = accountService;
         }
 
         public async Task Consume(ConsumeContext<ActivateAuthServer> context)
         {
             if (!context.Message.Id.IsValidObjectId())
-                await context.RespondAsync<ErrorResponse>(new
-                {
-                    ErrorType = ErrorType.InvalidOperation,
-                    ErrorMessage = "The auth server ID does not have a valid ObjectId format"
-                });
+            {
+                _logger.LogError("The Auth Server ID does not have a valid ObjectId format {AuthServerId}",
+                    context.Message.Id);
+                return;
+            }
+
+            var account = await _accountService.GetAccount(context.Message.AccountId);
+            var isAccountValid = account is { } && account.Enabled;
+            if (!isAccountValid)
+            {
+                _logger.LogError("Account invalid for id {AccountId}", context.Message.AccountId);
+                return;
+            }
 
             var authServer = await _repository.FindById(context.Message.AccountId, context.Message.Id);
             if (authServer is null)
             {
-                await context.RespondAsync<ErrorResponse>(new
-                {
-                    ErrorType = ErrorType.NotFound,
-                    ErrorMessage = "Auth Server not found"
-                });
+                _logger.LogError("Auth Server not found for id {AuthServerId}", context.Message.Id);
                 return;
             }
 
-            var isActivated = await _identityServer
+            await _identityServer
                 .AuthServerProvider(authServer.Provider)
                 .Activate(authServer.ProviderId);
-
-            if (!isActivated)
-            {
-                await context.RespondAsync<ErrorResponse>(new
-                {
-                    ErrorType = ErrorType.InternalServerError,
-                    ErrorMessage = "Cannot activate Auth Server on Provider"
-                });
-                return;
-            }
 
             var update = Builders<AuthServer>.Update.Combine(
                 Builders<AuthServer>.Update.Set(a => a.Active, true),

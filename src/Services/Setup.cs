@@ -1,7 +1,7 @@
 ﻿using Identity.Business.Services.Accounts;
 using Identity.Business.Services.IdentityServers;
-using Identity.Business.Services.IdentityServers.Providers;
-using Identity.Business.Services.IdentityServers.Providers.Abstractions;
+using Identity.Business.Services.IdentityServers.Abstractions;
+using Identity.Business.Services.IdentityServers.Providers.Okta;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Business.Services
@@ -24,10 +24,6 @@ namespace Identity.Business.Services
             services
                 .AddScoped<OktaGroupProvider>()
                 .AddScoped<IGroupProvider, OktaGroupProvider>(s => s.GetService<OktaGroupProvider>());
-
-            services
-                .AddScoped<OktaUserProvider>()
-                .AddScoped<IUserProvider, OktaUserProvider>(s => s.GetService<OktaUserProvider>());
 
             services
                 .AddScoped<OktaUserTypeProvider>()

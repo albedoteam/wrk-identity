@@ -5,63 +5,70 @@ terraform {
       version = ">= 2.0.0"
     }
   }
+  backend "kubernetes" {
+    secret_suffix    = "identity-business"
+    load_config_file = true
+  }
 }
 
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
-resource "kubernetes_namespace" "identity" {
-  metadata {
-    name = var.src_name
-  }
-}
-
 resource "kubernetes_secret" "identity" {
   metadata {
-    name      = var.secret_name
-    namespace = kubernetes_namespace.identity.metadata.0.name
+    name      = var.project_secrets_name
+    namespace = var.namespace
   }
   data = {
-    Broker_Host                       = var.broker_connection_string
-    DatabaseSettings_ConnectionString = var.db_connection_string
-    DatabaseSettings_DatabaseName     = var.db_name
-    IdentityServer_OrgUrl             = var.identity_server_org_url
-    IdentityServer_ClientId           = var.identity_server_client_id
+    Broker_Host                       = var.settings_broker_connection_string
+    DatabaseSettings_ConnectionString = var.settings_db_connection_string
+    DatabaseSettings_DatabaseName     = var.settings_db_name
+    IdentityServer_OrgUrl             = var.settings_identity_server_org_url
+    IdentityServer_ClientId           = var.settings_identity_server_client_id
+    IdentityServer_ApiUrl             = var.settings_identity_server_api_url
+    IdentityServer_ApiKey             = var.settings_identity_server_api_key
   }
 }
 
 resource "kubernetes_deployment" "identity" {
   metadata {
-    name      = var.src_name
-    namespace = kubernetes_namespace.identity.metadata.0.name
+    name      = var.project_name
+    namespace = var.namespace
     labels = {
-      app = var.deployment_label
+      app = var.project_label
     }
   }
 
   spec {
-    replicas = var.replicas_count
+    replicas = var.project_replicas_count
     selector {
       match_labels = {
-        app = var.src_name
+        app = var.project_name
       }
     }
     template {
       metadata {
         labels = {
-          app = var.src_name
+          app = var.project_name
         }
       }
       spec {
+        image_pull_secrets {
+          name = "${var.namespace}-do-registry"
+        }
         container {
-          image             = "${var.src_name}:latest"
-          name              = "${var.src_name}-container"
-          image_pull_policy = "IfNotPresent"
+          image             = "${var.do_registry_name}/${var.project_name}:${var.project_image_tag}"
+          name              = "${var.project_name}-container"
+          image_pull_policy = "Always"
           resources {
             limits = {
-              cpu    = "0.5"
-              memory = "512Mi"
+              cpu    = "0.25"
+              memory = "100Mi"
+            }
+            requests = {
+              cpu    = "0.25"
+              memory = "100Mi"
             }
           }
           port {
@@ -70,7 +77,7 @@ resource "kubernetes_deployment" "identity" {
           }
           env_from {
             secret_ref {
-              name = var.secret_name
+              name = var.project_secrets_name
             }
           }
         }

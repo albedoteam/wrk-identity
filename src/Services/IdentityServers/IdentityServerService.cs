@@ -1,5 +1,5 @@
 ﻿using AlbedoTeam.Identity.Contracts.Common;
-using Identity.Business.Services.IdentityServers.Providers.Abstractions;
+using Identity.Business.Services.IdentityServers.Abstractions;
 
 namespace Identity.Business.Services.IdentityServers
 {
@@ -20,11 +20,6 @@ namespace Identity.Business.Services.IdentityServers
         public IGroupProvider GroupProvider(Provider provider)
         {
             return _factory.GetGroupProvider(provider);
-        }
-
-        public IUserProvider UserProvider(Provider provider)
-        {
-            return _factory.GetUserProvider(provider);
         }
 
         public IUserTypeProvider UserTypeProvider(Provider provider)

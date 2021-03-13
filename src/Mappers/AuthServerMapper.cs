@@ -15,10 +15,10 @@ namespace Identity.Business.Mappers
         {
             var config = new MapperConfiguration(cfg =>
             {
-                // request to model
+                // request <-> model
                 cfg.CreateMap<CreateAuthServer, AuthServer>().ReverseMap();
 
-                // model to response
+                // model -> response
                 cfg.CreateMap<AuthServer, AuthServerResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 

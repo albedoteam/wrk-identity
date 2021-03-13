@@ -10,7 +10,8 @@ namespace Identity.Business.Models
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }
-        public string IsDefault { get; set; }
+        public bool IsDefault { get; set; }
         public Provider Provider { get; set; }
+        public string ProviderId { get; set; }
     }
 }

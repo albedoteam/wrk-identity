@@ -7,7 +7,6 @@ using Identity.Business.Db.Abstractions;
 using Identity.Business.Mappers.Abstractions;
 using Identity.Business.Models;
 using MassTransit;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Identity.Business.Consumers.AuthServerConsumers
@@ -27,12 +26,12 @@ namespace Identity.Business.Consumers.AuthServerConsumers
         {
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
-            
+
             var filterBy = CreateFilters(
                 context.Message.ShowDeleted,
                 null,
                 AddFilterBy(context.Message.FilterBy));
-            
+
             var orderBy = _repository.Helpers.CreateSorting(
                 context.Message.OrderBy,
                 context.Message.Sorting.ToString());
@@ -71,7 +70,7 @@ namespace Identity.Business.Consumers.AuthServerConsumers
 
             return optionalFilters;
         }
-        
+
         private static FilterDefinition<AuthServer> CreateFilters(
             bool showDeleted = false,
             FilterDefinition<AuthServer> requiredFields = null,

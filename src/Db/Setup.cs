@@ -10,7 +10,6 @@ namespace Identity.Business.Db
             services.AddScoped<IAuthServerRepository, AuthServerRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IUserTypeRepository, UserTypeRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
