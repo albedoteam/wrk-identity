@@ -81,13 +81,14 @@ namespace Identity.Business.Consumers.UserTypeConsumers
                 return;
             }
 
-            // adjust userType name 
-            var accountName = account.Name.Replace(" ", "-").ToLower();
-            var newName = $"{accountName}-{context.Message.Name}";
+            // adjust usertype name 
+            var accountName = account.Name.Replace(" ", "_").ToLower();
+            var newName = context.Message.Name.Replace("-", "_").Replace(" ", "_").ToLower();
+            var userTypeNameOnProvider = $"{accountName}_{newName}";
 
             var updated = await _identityServer
                 .UserTypeProvider(userType.Provider)
-                .Update(userType.ProviderId, newName, context.Message.DisplayName, context.Message.Description);
+                .Update(userType.ProviderId, userTypeNameOnProvider, context.Message.DisplayName, context.Message.Description);
 
             if (!updated)
             {

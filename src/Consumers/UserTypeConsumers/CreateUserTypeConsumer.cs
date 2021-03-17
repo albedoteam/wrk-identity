@@ -59,8 +59,9 @@ namespace Identity.Business.Consumers.UserTypeConsumers
             var model = _mapper.RequestToModel(context.Message);
 
             // adjust usertype name 
-            var accountName = account.Name.Replace(" ", "-").ToLower();
-            var userTypeNameOnProvider = $"{accountName}-{model.Name}";
+            var accountName = account.Name.Replace(" ", "_").ToLower();
+            model.Name = model.Name.Replace("-", "_").Replace(" ", "_").ToLower();
+            var userTypeNameOnProvider = $"{accountName}_{model.Name}";
 
             var userTypeProviderId = await _identityServer
                 .UserTypeProvider(context.Message.Provider)
