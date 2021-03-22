@@ -2,6 +2,7 @@
 using AlbedoTeam.Identity.Contracts.Common;
 using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
 using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+using Identity.Business.Models.SubDocuments;
 
 namespace Identity.Business.Models
 {
@@ -19,6 +20,7 @@ namespace Identity.Business.Models
         public bool Active { get; set; }
         public Provider Provider { get; set; }
         public string ProviderId { get; set; }
+        public CommunicationRules CommunicationRules { get; set; }
         public string UpdateReason { get; set; }
     }
 }

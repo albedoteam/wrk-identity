@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using AlbedoTeam.Identity.Contracts.Common;
 using AlbedoTeam.Identity.Contracts.Requests;
 using AlbedoTeam.Identity.Contracts.Responses;
 using AutoMapper;
 using Identity.Business.Mappers.Abstractions;
 using Identity.Business.Models;
+using Identity.Business.Models.SubDocuments;
 
 namespace Identity.Business.Mappers
 {
@@ -22,6 +24,9 @@ namespace Identity.Business.Mappers
                 cfg.CreateMap<AuthServer, AuthServerResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
+                cfg.CreateMap<CommunicationRules, ICommunicationRules>().ReverseMap();
+                cfg.CreateMap<CommunicationRule, ICommunicationRule>().ReverseMap();
+
                 // model to event
             });
 
@@ -31,6 +36,11 @@ namespace Identity.Business.Mappers
         public AuthServer MapRequestToModel(CreateAuthServer request)
         {
             return _mapper.Map<CreateAuthServer, AuthServer>(request);
+        }
+
+        public CommunicationRules MapRequestToModel(ICommunicationRules request)
+        {
+            return _mapper.Map<ICommunicationRules, CommunicationRules>(request);
         }
 
         public AuthServerResponse MapModelToResponse(AuthServer model)

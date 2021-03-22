@@ -88,7 +88,8 @@ namespace Identity.Business.Consumers.UserTypeConsumers
 
             var updated = await _identityServer
                 .UserTypeProvider(userType.Provider)
-                .Update(userType.ProviderId, userTypeNameOnProvider, context.Message.DisplayName, context.Message.Description);
+                .Update(userType.ProviderId, userTypeNameOnProvider, context.Message.DisplayName,
+                    context.Message.Description);
 
             if (!updated)
             {

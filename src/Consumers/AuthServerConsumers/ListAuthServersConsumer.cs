@@ -65,7 +65,7 @@ namespace Identity.Business.Consumers.AuthServerConsumers
 
             var optionalFilters = Builders<AuthServer>.Filter.Or(
                 _repository.Helpers.Like(a => a.Name, filterBy),
-                _repository.Helpers.Like(a=> a.Audience, filterBy),
+                _repository.Helpers.Like(a => a.Audience, filterBy),
                 _repository.Helpers.Like(a => a.Description, filterBy),
                 _repository.Helpers.Like(a => a.AccountId, filterBy)
             );

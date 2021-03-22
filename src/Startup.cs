@@ -46,6 +46,7 @@ namespace Identity.Business
                     consumers
                         .Add<CreateAuthServerConsumer>()
                         .Add<DeleteAuthServerConsumer>()
+                        .Add<UpdateAuthServerConsumer>()
                         .Add<GetAuthServerConsumer>()
                         .Add<ListAuthServersConsumer>()
                         .Add<ActivateAuthServerConsumer>()
