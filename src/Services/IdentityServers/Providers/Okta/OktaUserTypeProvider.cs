@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using Microsoft.Extensions.Logging;
-using Okta.Sdk;
-using Okta.Sdk.Configuration;
-
-namespace Identity.Business.Services.IdentityServers.Providers.Okta
+﻿namespace Identity.Business.Services.IdentityServers.Providers.Okta
 {
+    using System.Threading.Tasks;
+    using Abstractions;
+    using global::Okta.Sdk;
+    using global::Okta.Sdk.Configuration;
+    using Microsoft.Extensions.Logging;
+
     public class OktaUserTypeProvider : IUserTypeProvider
     {
         private readonly IdentityServerOptions _identityServerOptions;

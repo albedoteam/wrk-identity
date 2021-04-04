@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Identity.Business.Models.SubDocuments
+﻿namespace Identity.Business.Models.SubDocuments
 {
+    using System.Collections.Generic;
+
     public class CommunicationRule
     {
         public string TemplateId { get; set; }

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Models;
-
-namespace Identity.Business.Mappers.Abstractions
+﻿namespace Identity.Business.Mappers.Abstractions
 {
+    using System.Collections.Generic;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Models;
+
     public interface IUserTypeMapper
     {
         // request to model

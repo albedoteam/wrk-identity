@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Models;
-using Identity.Business.Models.SubDocuments;
-
-namespace Identity.Business.Mappers.Abstractions
+﻿namespace Identity.Business.Mappers.Abstractions
 {
+    using System.Collections.Generic;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Models;
+    using Models.SubDocuments;
+
     public interface IAuthServerMapper
     {
         AuthServer MapRequestToModel(CreateAuthServer request);

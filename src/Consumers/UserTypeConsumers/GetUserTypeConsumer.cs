@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using MassTransit;
-
-namespace Identity.Business.Consumers.UserTypeConsumers
+﻿namespace Identity.Business.Consumers.UserTypeConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+
     public class GetUserTypeConsumer : IConsumer<GetUserType>
     {
         private readonly IUserTypeMapper _mapper;

@@ -1,9 +1,9 @@
-﻿using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
-
-namespace Identity.Business.Models
+﻿namespace Identity.Business.Models
 {
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+
     [BsonCollection("Groups")]
     public class Group : DocumentWithAccount
     {

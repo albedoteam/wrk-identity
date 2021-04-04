@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AlbedoTeam.Sdk.DataLayerAccess;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Models;
-using MongoDB.Driver;
-
-namespace Identity.Business.Db
+﻿namespace Identity.Business.Db
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using Models;
+    using MongoDB.Driver;
+
     public class AuthServerRepository : BaseRepositoryWithAccount<AuthServer>, IAuthServerRepository
     {
         public AuthServerRepository(

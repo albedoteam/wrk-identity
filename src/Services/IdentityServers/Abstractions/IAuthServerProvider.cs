@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Identity.Business.Models;
-
-namespace Identity.Business.Services.IdentityServers.Abstractions
+﻿namespace Identity.Business.Services.IdentityServers.Abstractions
 {
+    using System.Threading.Tasks;
+    using Models;
+
     public interface IAuthServerProvider
     {
         Task<AuthServer> Create(string accountId, string accountName, string accountDisplayName);

@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using Identity.Business.Models;
-using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using MassTransit;
-using MongoDB.Driver;
-
-namespace Identity.Business.Consumers.GroupConsumers
+﻿namespace Identity.Business.Consumers.GroupConsumers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Models;
+    using MongoDB.Driver;
+    using Services.Accounts;
+    using Services.IdentityServers.Abstractions;
+
     public class UpdateGroupConsumer : IConsumer<UpdateGroup>
     {
         private readonly IAccountService _accountService;

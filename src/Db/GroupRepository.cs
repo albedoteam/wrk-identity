@@ -1,10 +1,10 @@
-﻿using AlbedoTeam.Sdk.DataLayerAccess;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Models;
-
-namespace Identity.Business.Db
+﻿namespace Identity.Business.Db
 {
+    using Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using Models;
+
     public class GroupRepository : BaseRepositoryWithAccount<Group>, IGroupRepository
     {
         public GroupRepository(

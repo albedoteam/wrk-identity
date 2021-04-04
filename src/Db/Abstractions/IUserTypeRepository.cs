@@ -1,8 +1,8 @@
-﻿using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using Identity.Business.Models;
-
-namespace Identity.Business.Db.Abstractions
+﻿namespace Identity.Business.Db.Abstractions
 {
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using Models;
+
     public interface IUserTypeRepository : IBaseRepositoryWithAccount<UserType>
     {
     }

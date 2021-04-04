@@ -1,8 +1,8 @@
-﻿using Identity.Business.Db.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Identity.Business.Db
+﻿namespace Identity.Business.Db
 {
+    using Abstractions;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class Setup
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)

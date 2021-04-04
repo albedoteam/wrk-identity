@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Identity.Business.Services.IdentityServers.Abstractions
+﻿namespace Identity.Business.Services.IdentityServers.Abstractions
 {
+    using System.Threading.Tasks;
+
     public interface IGroupProvider
     {
         Task<string> Create(string name, string description);

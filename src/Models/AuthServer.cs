@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
-using Identity.Business.Models.SubDocuments;
-
-namespace Identity.Business.Models
+﻿namespace Identity.Business.Models
 {
+    using System.Collections.Generic;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+    using SubDocuments;
+
     [BsonCollection("AuthorizationServers")]
     public class AuthServer : DocumentWithAccount
     {
