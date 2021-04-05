@@ -63,11 +63,11 @@ resource "kubernetes_deployment" "identity" {
           image_pull_policy = "Always"
           resources {
             limits = {
-              cpu    = "300m"
-              memory = "200Mi"
+              cpu    = "250m"
+              memory = "100Mi"
             }
             requests = {
-              cpu    = "125m"
+              cpu    = "50m"
               memory = "50Mi"
             }
           }
