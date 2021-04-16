@@ -5,6 +5,7 @@
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.FilterLanguage;
     using Db.Abstractions;
     using Mappers.Abstractions;
     using MassTransit;
@@ -29,8 +30,7 @@
 
             var filterBy = CreateFilters(
                 context.Message.ShowDeleted,
-                null,
-                AddFilterBy(context.Message.FilterBy));
+                context.Message.FilterBy);
 
             var orderBy = _repository.Helpers.CreateSorting(
                 context.Message.OrderBy,
@@ -57,27 +57,16 @@
                     context.Message.Sorting
                 });
         }
-
-        private FilterDefinition<AuthServer> AddFilterBy(string filterBy)
-        {
-            if (string.IsNullOrWhiteSpace(filterBy))
-                return null;
-
-            var optionalFilters = Builders<AuthServer>.Filter.Or(
-                _repository.Helpers.Like(a => a.Name, filterBy),
-                _repository.Helpers.Like(a => a.Audience, filterBy),
-                _repository.Helpers.Like(a => a.Description, filterBy),
-                _repository.Helpers.Like(a => a.AccountId, filterBy)
-            );
-
-            return optionalFilters;
-        }
-
+        
         private static FilterDefinition<AuthServer> CreateFilters(
-            bool showDeleted = false,
-            FilterDefinition<AuthServer> requiredFields = null,
-            FilterDefinition<AuthServer> filteredByFilters = null)
+            bool showDeleted,
+            string filterBy,
+            FilterDefinition<AuthServer> requiredFields = null)
         {
+            var filteredByFilters = string.IsNullOrWhiteSpace(filterBy)
+                ? null
+                : FilterLanguage.ParseToFilterDefinition<AuthServer>(filterBy);
+            
             var mainFilters = Builders<AuthServer>.Filter.And(Builders<AuthServer>.Filter.Empty);
 
             if (!showDeleted)

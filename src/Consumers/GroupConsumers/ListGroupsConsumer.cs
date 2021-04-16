@@ -5,6 +5,7 @@
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.FilterLanguage;
     using Db.Abstractions;
     using Mappers.Abstractions;
     using MassTransit;
@@ -39,8 +40,7 @@
 
             var filterBy = CreateFilters(
                 context.Message.ShowDeleted,
-                null,
-                AddFilterBy(context.Message.FilterBy));
+                context.Message.FilterBy);
 
             var orderBy = _repository.Helpers.CreateSorting(
                 context.Message.OrderBy,
@@ -73,25 +73,15 @@
                 });
         }
 
-        private FilterDefinition<Group> AddFilterBy(string filterBy)
-        {
-            if (string.IsNullOrWhiteSpace(filterBy))
-                return null;
-
-            var optionalFilters = Builders<Group>.Filter.Or(
-                _repository.Helpers.Like(a => a.Name, filterBy),
-                _repository.Helpers.Like(a => a.DisplayName, filterBy),
-                _repository.Helpers.Like(a => a.Description, filterBy)
-            );
-
-            return optionalFilters;
-        }
-
         private static FilterDefinition<Group> CreateFilters(
-            bool showDeleted = false,
-            FilterDefinition<Group> requiredFields = null,
-            FilterDefinition<Group> filteredByFilters = null)
+            bool showDeleted,
+            string filterBy,
+            FilterDefinition<Group> requiredFields = null)
         {
+            var filteredByFilters = string.IsNullOrWhiteSpace(filterBy)
+                ? null
+                : FilterLanguage.ParseToFilterDefinition<Group>(filterBy);
+            
             var mainFilters = Builders<Group>.Filter.And(Builders<Group>.Filter.Empty);
 
             if (!showDeleted)
