@@ -1,10 +1,7 @@
 ﻿namespace Identity.Business.Db.Abstractions
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AlbedoTeam.Sdk.DataLayerAccess;
     using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-    using AlbedoTeam.Sdk.DataLayerAccess.Utils;
     using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
     using Models;
 

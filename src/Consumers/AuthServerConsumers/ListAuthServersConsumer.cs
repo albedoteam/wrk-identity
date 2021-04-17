@@ -1,21 +1,15 @@
 ﻿namespace Identity.Business.Consumers.AuthServerConsumers
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
-    using AlbedoTeam.Sdk.DataLayerAccess;
-    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-    using AlbedoTeam.Sdk.DataLayerAccess.Utils;
     using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
-    using AlbedoTeam.Sdk.FilterLanguage;
     using Db.Abstractions;
     using Mappers.Abstractions;
     using MassTransit;
     using Models;
-    using MongoDB.Driver;
 
     public class ListAuthServersConsumer : IConsumer<ListAuthServers>
     {
