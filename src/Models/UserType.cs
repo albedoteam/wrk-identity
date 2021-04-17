@@ -5,7 +5,7 @@
     using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
     using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
 
-    [BsonCollection("UserTypes")]
+    [Collection("UserTypes")]
     public class UserType : DocumentWithAccount
     {
         public string DisplayName { get; set; }

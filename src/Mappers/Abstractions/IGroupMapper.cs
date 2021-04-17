@@ -3,12 +3,17 @@
     using System.Collections.Generic;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
+    using MassTransit;
     using Models;
 
     public interface IGroupMapper
     {
         // request <-> model
         Group RequestToModel(CreateGroup request);
+        
+        // request <-> query
+        QueryParams RequestToQuery(ListGroups request);
 
         // model <-> response
         GroupResponse MapModelToResponse(Group response);

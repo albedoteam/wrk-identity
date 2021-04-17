@@ -4,6 +4,7 @@
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
     using Models;
     using Models.SubDocuments;
 
@@ -13,5 +14,6 @@
         CommunicationRules MapRequestToModel(ICommunicationRules request);
         AuthServerResponse MapModelToResponse(AuthServer model);
         List<AuthServerResponse> MapModelToResponse(List<AuthServer> models);
+        QueryParams RequestToQuery(ListAuthServers request);
     }
 }

@@ -4,7 +4,7 @@
     using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
     using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
 
-    [BsonCollection("Groups")]
+    [Collection("Groups")]
     public class Group : DocumentWithAccount
     {
         public string Name { get; set; }

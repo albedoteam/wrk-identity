@@ -6,7 +6,7 @@
     using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
     using SubDocuments;
 
-    [BsonCollection("AuthorizationServers")]
+    [Collection("AuthorizationServers")]
     public class AuthServer : DocumentWithAccount
     {
         public string Name { get; set; }

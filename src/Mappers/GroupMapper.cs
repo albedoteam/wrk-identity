@@ -4,6 +4,7 @@
     using Abstractions;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
     using AutoMapper;
     using Models;
 
@@ -22,7 +23,9 @@
                 cfg.CreateMap<Group, GroupResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
-                // model to event
+                // request -> query
+                cfg.CreateMap<ListGroups, QueryParams>(MemberList.Destination)
+                    .ForMember(l => l.Sorting, opt => opt.MapFrom(o => o.Sorting.ToString()));
             });
 
             _mapper = config.CreateMapper();
@@ -31,6 +34,11 @@
         public Group RequestToModel(CreateGroup request)
         {
             return _mapper.Map<CreateGroup, Group>(request);
+        }
+
+        public QueryParams RequestToQuery(ListGroups request)
+        {
+            return _mapper.Map<ListGroups, QueryParams>(request);
         }
 
         public GroupResponse MapModelToResponse(Group response)

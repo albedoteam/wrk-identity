@@ -5,6 +5,7 @@
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
     using AutoMapper;
     using Models;
     using Models.SubDocuments;
@@ -27,7 +28,9 @@
                 cfg.CreateMap<CommunicationRules, ICommunicationRules>().ReverseMap();
                 cfg.CreateMap<CommunicationRule, ICommunicationRule>().ReverseMap();
 
-                // model to event
+                // request -> query
+                cfg.CreateMap<ListAuthServers, QueryParams>(MemberList.Destination)
+                    .ForMember(l => l.Sorting, opt => opt.MapFrom(o => o.Sorting.ToString()));
             });
 
             _mapper = config.CreateMapper();
@@ -51,6 +54,11 @@
         public List<AuthServerResponse> MapModelToResponse(List<AuthServer> models)
         {
             return _mapper.Map<List<AuthServer>, List<AuthServerResponse>>(models);
+        }
+
+        public QueryParams RequestToQuery(ListAuthServers request)
+        {
+            return _mapper.Map<ListAuthServers, QueryParams>(request);
         }
     }
 }

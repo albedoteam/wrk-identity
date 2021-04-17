@@ -5,6 +5,8 @@
     using AlbedoTeam.Identity.Contracts.Common;
     using AlbedoTeam.Identity.Contracts.Requests;
     using AlbedoTeam.Identity.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
     using AlbedoTeam.Sdk.FilterLanguage;
     using Db.Abstractions;
     using Mappers.Abstractions;
@@ -35,25 +37,10 @@
                 return;
             }
 
-            var page = context.Message.Page > 0 ? context.Message.Page : 1;
-            var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
+            var queryRequest = QueryUtils.GetQueryParams<UserType>(_mapper.RequestToQuery(context.Message));
+            var queryResponse = await _repository.QueryByPage(context.Message.AccountId, queryRequest);
 
-            var filterBy = CreateFilters(
-                context.Message.ShowDeleted,
-                context.Message.FilterBy);
-
-            var orderBy = _repository.Helpers.CreateSorting(
-                context.Message.OrderBy,
-                context.Message.Sorting.ToString());
-
-            var (totalPages, userTypes) = await _repository.QueryByPage(
-                context.Message.AccountId,
-                page,
-                pageSize,
-                filterBy,
-                orderBy);
-
-            if (!userTypes.Any())
+            if (!queryResponse.Records.Any())
                 await context.RespondAsync<ErrorResponse>(new
                 {
                     ErrorType = ErrorType.NotFound,
@@ -62,38 +49,15 @@
             else
                 await context.RespondAsync<ListUserTypesResponse>(new
                 {
-                    context.Message.Page,
-                    context.Message.PageSize,
-                    RecordsInPage = userTypes.Count,
-                    TotalPages = totalPages,
-                    Items = _mapper.MapModelToResponse(userTypes.ToList()),
+                    queryResponse.Page,
+                    queryResponse.PageSize,
+                    queryResponse.RecordsInPage,
+                    queryResponse.TotalPages,
+                    Items = _mapper.MapModelToResponse(queryResponse.Records.ToList()),
                     context.Message.FilterBy,
                     context.Message.OrderBy,
                     context.Message.Sorting
                 });
-        }
-
-        private static FilterDefinition<UserType> CreateFilters(
-            bool showDeleted,
-            string filterBy,
-            FilterDefinition<UserType> requiredFields = null)
-        {
-            var filteredByFilters = string.IsNullOrWhiteSpace(filterBy)
-                ? null
-                : FilterLanguage.ParseToFilterDefinition<UserType>(filterBy);
-            
-            var mainFilters = Builders<UserType>.Filter.And(Builders<UserType>.Filter.Empty);
-
-            if (!showDeleted)
-                mainFilters &= Builders<UserType>.Filter.Eq(a => a.IsDeleted, false);
-
-            if (requiredFields is { })
-                mainFilters &= requiredFields;
-
-            if (filteredByFilters is { })
-                mainFilters &= filteredByFilters;
-
-            return mainFilters;
         }
     }
 }
