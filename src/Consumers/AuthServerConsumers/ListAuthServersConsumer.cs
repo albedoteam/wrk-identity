@@ -27,24 +27,17 @@
             var queryParams = QueryUtils.GetQueryParams<AuthServer>(_mapper.RequestToQuery(context.Message));
             var queryResponse = await _repository.QueryByPage(queryParams);
 
-            if (!queryResponse.Records.Any())
-                await context.RespondAsync<ErrorResponse>(new
-                {
-                    ErrorType = ErrorType.NotFound,
-                    ErrorMessage = "Auth Servers not found"
-                });
-            else
-                await context.RespondAsync<ListAuthServersResponse>(new
-                {
-                    queryResponse.Page,
-                    queryResponse.PageSize,
-                    queryResponse.RecordsInPage,
-                    queryResponse.TotalPages,
-                    Items = _mapper.MapModelToResponse(queryResponse.Records.ToList()),
-                    context.Message.FilterBy,
-                    context.Message.OrderBy,
-                    context.Message.Sorting
-                });
+            await context.RespondAsync<ListAuthServersResponse>(new
+            {
+                queryResponse.Page,
+                queryResponse.PageSize,
+                queryResponse.RecordsInPage,
+                queryResponse.TotalPages,
+                Items = _mapper.MapModelToResponse(queryResponse.Records.ToList()),
+                context.Message.FilterBy,
+                context.Message.OrderBy,
+                context.Message.Sorting
+            });
         }
     }
 }
