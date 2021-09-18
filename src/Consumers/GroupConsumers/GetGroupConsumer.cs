@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using MassTransit;
-
-namespace Identity.Business.Consumers.GroupConsumers
+﻿namespace Identity.Business.Consumers.GroupConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+
     public class GetGroupConsumer : IConsumer<GetGroup>
     {
         private readonly IGroupMapper _mapper;

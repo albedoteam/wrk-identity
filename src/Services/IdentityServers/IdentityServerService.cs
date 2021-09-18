@@ -1,8 +1,8 @@
-﻿using AlbedoTeam.Identity.Contracts.Common;
-using Identity.Business.Services.IdentityServers.Abstractions;
-
-namespace Identity.Business.Services.IdentityServers
+﻿namespace Identity.Business.Services.IdentityServers
 {
+    using Abstractions;
+    using AlbedoTeam.Identity.Contracts.Common;
+
     public class IdentityServerService : IIdentityServerService
     {
         private readonly IdentityProviderFactory _factory;

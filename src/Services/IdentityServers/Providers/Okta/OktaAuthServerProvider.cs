@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using Identity.Business.Models;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using Microsoft.Extensions.Logging;
-using Okta.Sdk;
-using Okta.Sdk.Configuration;
-
-namespace Identity.Business.Services.IdentityServers.Providers.Okta
+﻿namespace Identity.Business.Services.IdentityServers.Providers.Okta
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using global::Okta.Sdk;
+    using global::Okta.Sdk.Configuration;
+    using Microsoft.Extensions.Logging;
+    using Models;
+
     public class OktaAuthServerProvider : IAuthServerProvider
     {
         private readonly IdentityServerOptions _identityServerOptions;

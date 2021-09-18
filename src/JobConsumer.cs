@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
-using AlbedoTeam.Sdk.MessageConsumer.Configuration.Abstractions;
-using Microsoft.Extensions.Logging;
-
-namespace Identity.Business
+﻿namespace Identity.Business
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
+    using AlbedoTeam.Sdk.MessageConsumer.Configuration.Abstractions;
+    using Microsoft.Extensions.Logging;
+
     public class JobConsumer : IJobRunner
     {
         private readonly IBusRunner _busRunner;
@@ -31,8 +31,10 @@ namespace Identity.Business
 
         public async Task TickAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("JobConsumer is running: {Bus}", _busRunner.Who);
-            await Task.Delay(3000, cancellationToken);
+            // _logger.LogInformation("JobConsumer is running: {Bus}", _busRunner.Who);
+
+            await Task.CompletedTask;
+            await Task.Delay(5000, cancellationToken);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using MongoDB.Bson;
-
-namespace Identity.Business
+﻿namespace Identity.Business
 {
+    using MongoDB.Bson;
+
     public static class ObjectIdFormatValidationExtension
     {
         public static bool IsValidObjectId(this string value)

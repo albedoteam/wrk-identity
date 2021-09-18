@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
-
-namespace Identity.Business.Models
+﻿namespace Identity.Business.Models
 {
-    [BsonCollection("AuthorizationServers")]
+    using System.Collections.Generic;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+    using SubDocuments;
+
+    [Collection("AuthorizationServers")]
     public class AuthServer : DocumentWithAccount
     {
         public string Name { get; set; }
@@ -19,6 +20,7 @@ namespace Identity.Business.Models
         public bool Active { get; set; }
         public Provider Provider { get; set; }
         public string ProviderId { get; set; }
+        public CommunicationRules CommunicationRules { get; set; }
         public string UpdateReason { get; set; }
     }
 }
