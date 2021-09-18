@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Events;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using MassTransit;
-
-namespace Identity.Business.Consumers.GroupConsumers
+﻿namespace Identity.Business.Consumers.GroupConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Events;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Services.Accounts;
+    using Services.IdentityServers.Abstractions;
+
     public class DeleteGroupConsumer : IConsumer<DeleteGroup>
     {
         private readonly IAccountService _accountService;

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
-
-namespace Identity.Business.Models
+﻿namespace Identity.Business.Models
 {
-    [BsonCollection("UserTypes")]
+    using System.Collections.Generic;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+
+    [Collection("UserTypes")]
     public class UserType : DocumentWithAccount
     {
         public string DisplayName { get; set; }

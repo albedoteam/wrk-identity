@@ -7,29 +7,27 @@
     using Db.Abstractions;
     using Mappers.Abstractions;
     using MassTransit;
+    using Models;
+    using MongoDB.Driver;
     using Services.Accounts;
-    using Services.IdentityServers.Abstractions;
 
-    public class DeleteAuthServerConsumer : IConsumer<DeleteAuthServer>
+    public class UpdateAuthServerConsumer : IConsumer<UpdateAuthServer>
     {
         private readonly IAccountService _accountService;
-        private readonly IIdentityServerService _identityServer;
         private readonly IAuthServerMapper _mapper;
         private readonly IAuthServerRepository _repository;
 
-        public DeleteAuthServerConsumer(
+        public UpdateAuthServerConsumer(
+            IAccountService accountService,
             IAuthServerMapper mapper,
-            IAuthServerRepository repository,
-            IIdentityServerService identityServer,
-            IAccountService accountService)
+            IAuthServerRepository repository)
         {
+            _accountService = accountService;
             _mapper = mapper;
             _repository = repository;
-            _identityServer = identityServer;
-            _accountService = accountService;
         }
 
-        public async Task Consume(ConsumeContext<DeleteAuthServer> context)
+        public async Task Consume(ConsumeContext<UpdateAuthServer> context)
         {
             if (!context.Message.Id.IsValidObjectId())
             {
@@ -64,14 +62,16 @@
                 return;
             }
 
-            await _identityServer
-                .AuthServerProvider(authServer.Provider)
-                .Delete(authServer.ProviderId);
+            var communicationRules = _mapper.MapRequestToModel(context.Message.CommunicationRules);
 
-            await _repository.DeleteById(context.Message.AccountId, context.Message.Id);
+            var updateDefinition = Builders<AuthServer>.Update.Combine(
+                Builders<AuthServer>.Update.Set(g => g.CommunicationRules, communicationRules)
+            );
 
-            // get "soft-deleted"
-            authServer = await _repository.FindById(context.Message.AccountId, context.Message.Id, true);
+            await _repository.UpdateById(context.Message.AccountId, context.Message.Id, updateDefinition);
+
+            // get updated one
+            authServer = await _repository.FindById(context.Message.AccountId, context.Message.Id);
 
             await context.RespondAsync(_mapper.MapModelToResponse(authServer));
         }

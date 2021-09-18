@@ -1,17 +1,17 @@
-﻿using System;
-using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Commands;
-using AlbedoTeam.Identity.Contracts.Events;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Models;
-using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using MassTransit;
-using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
-
-namespace Identity.Business.Consumers.AuthServerConsumers
+﻿namespace Identity.Business.Consumers.AuthServerConsumers
 {
+    using System;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Commands;
+    using AlbedoTeam.Identity.Contracts.Events;
+    using Db.Abstractions;
+    using MassTransit;
+    using Microsoft.Extensions.Logging;
+    using Models;
+    using MongoDB.Driver;
+    using Services.Accounts;
+    using Services.IdentityServers.Abstractions;
+
     public class ActivateAuthServerConsumer : IConsumer<ActivateAuthServer>
     {
         private readonly IAccountService _accountService;

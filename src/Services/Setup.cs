@@ -1,11 +1,11 @@
-﻿using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using Identity.Business.Services.IdentityServers.Providers.Okta;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Identity.Business.Services
+﻿namespace Identity.Business.Services
 {
+    using Accounts;
+    using IdentityServers;
+    using IdentityServers.Abstractions;
+    using IdentityServers.Providers.Okta;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class Setup
     {
         public static IServiceCollection AddServices(this IServiceCollection services)

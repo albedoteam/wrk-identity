@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using Identity.Business.Models;
-using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using MassTransit;
-using MongoDB.Driver;
-
-namespace Identity.Business.Consumers.UserTypeConsumers
+﻿namespace Identity.Business.Consumers.UserTypeConsumers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Models;
+    using MongoDB.Driver;
+    using Services.Accounts;
+    using Services.IdentityServers.Abstractions;
+
     public class UpdateUserTypeConsumer : IConsumer<UpdateUserType>
     {
         private readonly IAccountService _accountService;
@@ -81,13 +81,15 @@ namespace Identity.Business.Consumers.UserTypeConsumers
                 return;
             }
 
-            // adjust userType name 
-            var accountName = account.Name.Replace(" ", "-").ToLower();
-            var newName = $"{accountName}-{context.Message.Name}";
+            // adjust usertype name 
+            var accountName = account.Name.Replace(" ", "_").ToLower();
+            var newName = context.Message.Name.Replace("-", "_").Replace(" ", "_").ToLower();
+            var userTypeNameOnProvider = $"{accountName}_{newName}";
 
             var updated = await _identityServer
                 .UserTypeProvider(userType.Provider)
-                .Update(userType.ProviderId, newName, context.Message.DisplayName, context.Message.Description);
+                .Update(userType.ProviderId, userTypeNameOnProvider, context.Message.DisplayName,
+                    context.Message.Description);
 
             if (!updated)
             {

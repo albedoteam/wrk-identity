@@ -1,19 +1,20 @@
-﻿using AlbedoTeam.Accounts.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Events;
-using AlbedoTeam.Sdk.DataLayerAccess;
-using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
-using AlbedoTeam.Sdk.MessageConsumer;
-using Identity.Business.Consumers.AuthServerConsumers;
-using Identity.Business.Consumers.GroupConsumers;
-using Identity.Business.Consumers.UserTypeConsumers;
-using Identity.Business.Db;
-using Identity.Business.Mappers;
-using Identity.Business.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Identity.Business
+﻿namespace Identity.Business
 {
+    using AlbedoTeam.Accounts.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Events;
+    using AlbedoTeam.Sdk.DataLayerAccess;
+    using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
+    using AlbedoTeam.Sdk.MessageConsumer;
+    using AlbedoTeam.Sdk.MessageConsumer.Configuration;
+    using Consumers.AuthServerConsumers;
+    using Consumers.GroupConsumers;
+    using Consumers.UserTypeConsumers;
+    using Db;
+    using Mappers;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Services;
+
     public class Startup : IWorkerConfigurator
     {
         public void Configure(IServiceCollection services, IConfiguration configuration)
@@ -38,14 +39,35 @@ namespace Identity.Business
             services.AddTransient<IJobRunner, JobConsumer>();
 
             services.AddBroker(
-                configure => configure
-                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("Broker_Host")),
+                configure =>
+                {
+                    configure.SetBrokerOptions(broker =>
+                    {
+                        broker.HostOptions = new HostOptions
+                        {
+                            Host = configuration.GetValue<string>("Broker_Host"),
+                            HeartbeatInterval = 10,
+                            RequestedChannelMax = 40,
+                            RequestedConnectionTimeout = 60000
+                        };
+
+                        broker.KillSwitchOptions = new KillSwitchOptions
+                        {
+                            ActivationThreshold = 10,
+                            TripThreshold = 0.15,
+                            RestartTimeout = 60
+                        };
+
+                        broker.PrefetchCount = 1;
+                    });
+                },
                 consumers =>
                 {
                     // auth servers
                     consumers
                         .Add<CreateAuthServerConsumer>()
                         .Add<DeleteAuthServerConsumer>()
+                        .Add<UpdateAuthServerConsumer>()
                         .Add<GetAuthServerConsumer>()
                         .Add<ListAuthServersConsumer>()
                         .Add<ActivateAuthServerConsumer>()

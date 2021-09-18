@@ -1,7 +1,7 @@
-﻿using AlbedoTeam.Identity.Contracts.Common;
-
-namespace Identity.Business.Services.IdentityServers.Abstractions
+﻿namespace Identity.Business.Services.IdentityServers.Abstractions
 {
+    using AlbedoTeam.Identity.Contracts.Common;
+
     public interface IIdentityServerService
     {
         IAuthServerProvider AuthServerProvider(Provider provider);

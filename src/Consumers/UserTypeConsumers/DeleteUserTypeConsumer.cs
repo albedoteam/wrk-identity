@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Identity.Contracts.Common;
-using AlbedoTeam.Identity.Contracts.Requests;
-using AlbedoTeam.Identity.Contracts.Responses;
-using Identity.Business.Db.Abstractions;
-using Identity.Business.Mappers.Abstractions;
-using Identity.Business.Services.Accounts;
-using Identity.Business.Services.IdentityServers.Abstractions;
-using MassTransit;
-
-namespace Identity.Business.Consumers.UserTypeConsumers
+﻿namespace Identity.Business.Consumers.UserTypeConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Identity.Contracts.Common;
+    using AlbedoTeam.Identity.Contracts.Requests;
+    using AlbedoTeam.Identity.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Services.Accounts;
+    using Services.IdentityServers.Abstractions;
+
     public class DeleteUserTypeConsumer : IConsumer<DeleteUserType>
     {
         private readonly IAccountService _accountService;
